@@ -27,6 +27,8 @@ import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 
 import static android.R.attr.name;
@@ -103,86 +105,88 @@ public class MainActivity extends AppCompatActivity {
         password =(EditText)findViewById(R.id.editText);
         email =(EditText)findViewById(R.id.editText3);
         phone =(EditText)findViewById(R.id.editText2);
-        PostRequester request = new PostRequester();
-        request.execute(name.getText().toString(), username.getText().toString(), password.getText().toString(), email.getText().toString(), phone.getText().toString());
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("name", name.getText().toString());
+        params.put("username", username.getText().toString());
+        params.put("email", email.getText().toString());
+        params.put("phone", phone.getText().toString());
+
+        Utils.PostRequester request = new Utils.PostRequester("user");
+        //PostRequester request = new PostRequester("user");
+        request.execute(params);
 
     }
 
     protected void get_users(View view) throws MalformedURLException, IOException {
-
-
-        GetRequester request = new GetRequester(this);
+        GetRequester request = new GetRequester(this, "users");
         System.out.println("CHOWMEIN");
         String data = request.execute().toString();
         System.out.println(data);
-
-
-
     }
 
-    private class PostRequester extends AsyncTask<String, Void, Void> {
-
-        @Override
-        protected Void doInBackground(String... params) {
-            URL url = null;
-            try {
-                url = new URL(API_URL+"user");
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-
-
-            Uri.Builder builder = new Uri.Builder()
-                    .appendQueryParameter("name", params[0])
-                    .appendQueryParameter("username", params[1])
-                    .appendQueryParameter("password", params[2])
-                    .appendQueryParameter("email", params[3])
-                    .appendQueryParameter("phone", params[4]);
-
-            String query = builder.build().getEncodedQuery();
-
-
-
-
-            try {
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setDoOutput(true);
-                urlConnection.setChunkedStreamingMode(0);
-
-                OutputStream out = urlConnection.getOutputStream();
-                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
-                writer.write(query);
-                writer.flush();
-                writer.close();
-                out.close();
-                System.out.println("RESPONSE" + urlConnection.getResponseCode());
-                urlConnection.disconnect();
-
-            }
-            catch(Exception e)
-            {
-                System.out.println(e);
-            }
-
-            return null;
-        }
-    }
+//    private class PostRequester extends AsyncTask<Map, Void, Void> {
+//
+//        URL url;
+//        PostRequester(String path)  {
+//            try {
+//                this.url = new URL("API_URL" + path);
+//            } catch(MalformedURLException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        @Override
+//        protected Void doInBackground(Map... params) {
+//
+//            Map<String, String> param = params[0];
+//
+//            Uri.Builder builder = new Uri.Builder();
+//            for (Map.Entry<String, String> entry : param.entrySet()) {
+//                builder.appendQueryParameter(entry.getKey(), entry.getValue());
+//            }
+//
+//            String query = builder.build().getEncodedQuery();
+//
+//            try {
+//                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+//                urlConnection.setDoOutput(true);
+//                urlConnection.setChunkedStreamingMode(0);
+//
+//                OutputStream out = urlConnection.getOutputStream();
+//                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
+//                writer.write(query);
+//                writer.flush();
+//                writer.close();
+//                out.close();
+//                System.out.println("RESPONSE" + urlConnection.getResponseCode());
+//                urlConnection.disconnect();
+//
+//            }
+//            catch(Exception e)
+//            {
+//                System.out.println(e);
+//            }
+//
+//            return null;
+//        }
+//    }
 
     private class GetRequester extends AsyncTask<String, Void, String> {
 
         Context context;
-        private GetRequester(Context context) {
+        URL url;
+
+        private GetRequester(Context context, String path) {
             this.context = context.getApplicationContext();
+            try {
+                this.url = new URL(API_URL+path);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
         }
 
         @Override
         protected String doInBackground(String...params) {
-            URL url = null;
-            try {
-                url = new URL(API_URL+"users");
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
 
             try {
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();

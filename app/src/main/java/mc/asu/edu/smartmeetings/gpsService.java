@@ -11,6 +11,9 @@ import android.location.*;
 import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by Sairaj on 4/6/2017.
  */
@@ -57,6 +60,12 @@ public class gpsService {
                     if(location == null)
                     {
                         location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("username", "something");
+                        params.put("latitude", Double.toString(location.getLatitude()));
+                        params.put("longitude", Double.toString(location.getLongitude()));
+                        Utils.PostRequester postRequest = new Utils.PostRequester("location");
+                        postRequest.execute(params);
                     }
                 }
                 catch(Exception e)
