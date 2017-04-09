@@ -12,6 +12,8 @@ import android.os.SystemClock;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -54,10 +56,14 @@ public gpsLocation()
 
         latitude = location.getLatitude();
         longitude = location.getLongitude();
-
         timestamp = location.getTime(); // this is going to give us time in milliseconds.
-
         System.out.println(timestamp + " latitude " + latitude + " longitude " + longitude );
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("username", "something");
+        params.put("latitude", Double.toString(location.getLatitude()));
+        params.put("longitude", Double.toString(location.getLongitude()));
+        Utils.PostRequester postRequest = new Utils.PostRequester("location");
+        postRequest.execute(params);
     }
 
     void getWeatherUpdates(Context context) throws IOException

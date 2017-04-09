@@ -60,12 +60,6 @@ public class gpsService {
                     if(location == null)
                     {
                         location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("username", "something");
-                        params.put("latitude", Double.toString(location.getLatitude()));
-                        params.put("longitude", Double.toString(location.getLongitude()));
-                        Utils.PostRequester postRequest = new Utils.PostRequester("location");
-                        postRequest.execute(params);
                     }
                 }
                 catch(Exception e)

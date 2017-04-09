@@ -11,18 +11,25 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 /**
  * Created by yeskarthik on 4/9/2017.
  */
 
 public class Utils {
 
+    public static final String API_URL = "http://smartmeetings-server.jgscuqju3c.us-west-2.elasticbeanstalk.com/";
     public static class PostRequester extends AsyncTask<Map, Void, Void> {
 
         URL url;
         PostRequester(String path)  {
             try {
-                this.url = new URL("API_URL" + path);
+                this.url = new URL(API_URL + path);
+                System.out.println(this.url.toString());
             } catch(MalformedURLException e) {
                 e.printStackTrace();
             }
@@ -42,16 +49,15 @@ public class Utils {
 
             try {
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setFixedLengthStreamingMode(query.length());
                 urlConnection.setDoOutput(true);
-                urlConnection.setChunkedStreamingMode(0);
-
                 OutputStream out = urlConnection.getOutputStream();
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
                 writer.write(query);
                 writer.flush();
                 writer.close();
                 out.close();
-                System.out.println("RESPONSE" + urlConnection.getResponseCode());
+                System.out.println("RESPONSE " + urlConnection.getResponseCode());
                 urlConnection.disconnect();
 
             }
