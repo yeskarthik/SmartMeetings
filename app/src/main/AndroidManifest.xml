@@ -21,19 +21,26 @@
             android:name=".MainActivity"
             android:label="MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".DisplayUsers"
             android:label="@string/title_activity_display_users"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <service
             android:name=".gpsLocation"
-            android:exported="false"/>
+            android:exported="false" />
+
+        <activity
+            android:name=".NoteTakingActivity"
+            android:label="@string/title_activity_note_taking"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
