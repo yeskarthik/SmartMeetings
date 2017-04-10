@@ -1,7 +1,9 @@
 package mc.asu.edu.smartmeetings;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 import java.io.BufferedWriter;
 import java.io.OutputStream;
@@ -23,10 +25,13 @@ import okhttp3.Response;
 public class Utils {
 
     public static final String API_URL = "http://smartmeetings-server.jgscuqju3c.us-west-2.elasticbeanstalk.com/";
+    //public static final String API_URL = "http://10.0.2.2:8080/";
     public static class PostRequester extends AsyncTask<Map, Void, Void> {
 
+        Context context;
         URL url;
-        PostRequester(String path)  {
+        PostRequester(Context context, String path)  {
+            this.context = context;
             try {
                 this.url = new URL(API_URL + path);
                 System.out.println(this.url.toString());
@@ -67,6 +72,13 @@ public class Utils {
             }
 
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            Toast toast = Toast.makeText(context, "Save complete", Toast.LENGTH_SHORT);
+            toast.show();
         }
     }
 }

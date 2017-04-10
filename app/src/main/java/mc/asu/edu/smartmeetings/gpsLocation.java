@@ -62,7 +62,7 @@ public gpsLocation()
         params.put("username", "something");
         params.put("latitude", Double.toString(location.getLatitude()));
         params.put("longitude", Double.toString(location.getLongitude()));
-        Utils.PostRequester postRequest = new Utils.PostRequester("location");
+        Utils.PostRequester postRequest = new Utils.PostRequester(this.getApplicationContext(), "location");
         postRequest.execute(params);
     }
 

@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         params.put("email", email.getText().toString());
         params.put("phone", phone.getText().toString());
 
-        Utils.PostRequester request = new Utils.PostRequester("user");
+        Utils.PostRequester request = new Utils.PostRequester(this.getApplicationContext(), "user");
         //PostRequester request = new PostRequester("user");
         request.execute(params);
 

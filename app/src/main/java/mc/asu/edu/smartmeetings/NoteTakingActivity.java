@@ -6,6 +6,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.EditText;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class NoteTakingActivity extends AppCompatActivity {
 
@@ -24,6 +28,21 @@ public class NoteTakingActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    protected  void save_note(View view) {
+        EditText note_title =(EditText)findViewById(R.id.notetitle);
+        EditText note = (EditText)findViewById(R.id.notepad);
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("username", "something");
+        params.put("note_title", note_title.getText().toString());
+        params.put("note_text",note.getText().toString());
+
+        System.out.println("hello");
+        Utils.PostRequester requester = new Utils.PostRequester(this.getApplicationContext(), "note");
+        requester.execute(params);
+
     }
 
 }
