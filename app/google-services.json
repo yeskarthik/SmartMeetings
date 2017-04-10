@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "475046137405",
+    "firebase_url": "https://smart-meetings-ccc36.firebaseio.com",
+    "project_id": "smart-meetings-ccc36",
+    "storage_bucket": "smart-meetings-ccc36.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:475046137405:android:6a312ecf6e87dfd0",
+        "android_client_info": {
+          "package_name": "mc.asu.edu.smartmeetings"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "475046137405-sdrkg8li6hvmbaqtd4fra9j2pa8qok4t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDETP8kGHsvQi1XWRk525NKm9fVxnb2eis"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

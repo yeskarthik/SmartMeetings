@@ -38,7 +38,9 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String EXTRA_MESSAGE = "mc.asu.edu.smartmeetings.passMessage";
     public String[] passMessage = null;
-    public static final String API_URL = "http://smartmeetings-server.jgscuqju3c.us-west-2.elasticbeanstalk.com/";
+    //public static final String API_URL = "http://smartmeetings-server.jgscuqju3c.us-west-2.elasticbeanstalk.com/";
+    public static final String API_URL = "http://10.0.2.2:8080/";
+
     EditText name, username, password, email, phone;
     public static final int ASK_MULTIPLE_PERMISSION_REQUEST_CODE =1;
     gpsService service;
@@ -110,9 +112,9 @@ public class MainActivity extends AppCompatActivity {
         params.put("username", username.getText().toString());
         params.put("email", email.getText().toString());
         params.put("phone", phone.getText().toString());
+        params.put("password", password.getText().toString());
 
         Utils.PostRequester request = new Utils.PostRequester("user");
-        //PostRequester request = new PostRequester("user");
         request.execute(params);
 
     }

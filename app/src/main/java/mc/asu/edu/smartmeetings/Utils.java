@@ -22,7 +22,8 @@ import okhttp3.Response;
 
 public class Utils {
 
-    public static final String API_URL = "http://smartmeetings-server.jgscuqju3c.us-west-2.elasticbeanstalk.com/";
+    //public static final String API_URL = "http://smartmeetings-server.jgscuqju3c.us-west-2.elasticbeanstalk.com/";
+    public static final String API_URL = "http://10.0.2.2:8080/";
     public static class PostRequester extends AsyncTask<Map, Void, Void> {
 
         URL url;
