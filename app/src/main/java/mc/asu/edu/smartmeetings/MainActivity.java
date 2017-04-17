@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
             // permissions this app might request
         }
     }
-    protected void create_user(View view) throws MalformedURLException, IOException {
+    protected void create_user(View view) throws IOException {
 
         name =(EditText)findViewById(R.id.editText4);
         username =(EditText)findViewById(R.id.editText5);
@@ -112,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
         params.put("phone", phone.getText().toString());
 
         Utils.PostRequester request = new Utils.PostRequester(this.getApplicationContext(), "user");
-        //PostRequester request = new PostRequester("user");
         request.execute(params);
 
     }
@@ -123,53 +122,6 @@ public class MainActivity extends AppCompatActivity {
         String data = request.execute().toString();
         System.out.println(data);
     }
-
-//    private class PostRequester extends AsyncTask<Map, Void, Void> {
-//
-//        URL url;
-//        PostRequester(String path)  {
-//            try {
-//                this.url = new URL("API_URL" + path);
-//            } catch(MalformedURLException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//
-//        @Override
-//        protected Void doInBackground(Map... params) {
-//
-//            Map<String, String> param = params[0];
-//
-//            Uri.Builder builder = new Uri.Builder();
-//            for (Map.Entry<String, String> entry : param.entrySet()) {
-//                builder.appendQueryParameter(entry.getKey(), entry.getValue());
-//            }
-//
-//            String query = builder.build().getEncodedQuery();
-//
-//            try {
-//                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-//                urlConnection.setDoOutput(true);
-//                urlConnection.setChunkedStreamingMode(0);
-//
-//                OutputStream out = urlConnection.getOutputStream();
-//                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
-//                writer.write(query);
-//                writer.flush();
-//                writer.close();
-//                out.close();
-//                System.out.println("RESPONSE" + urlConnection.getResponseCode());
-//                urlConnection.disconnect();
-//
-//            }
-//            catch(Exception e)
-//            {
-//                System.out.println(e);
-//            }
-//
-//            return null;
-//        }
-//    }
 
     private class GetRequester extends AsyncTask<String, Void, String> {
 
@@ -211,13 +163,10 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("RESPONSE" + urlConnection.getResponseCode());
                 urlConnection.disconnect();
                 return jsonString;
-
-
             }
 
 
-            catch(Exception e)
-            {
+            catch(Exception e) {
                 System.out.println(e);
             }
 
@@ -230,7 +179,6 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra(EXTRA_MESSAGE,data.split("\\], \\["));
             startActivity(intent);
         }
-
 
     }
 }

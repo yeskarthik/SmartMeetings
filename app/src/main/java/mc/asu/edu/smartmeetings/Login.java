@@ -14,8 +14,12 @@ import java.io.BufferedWriter;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -34,21 +38,14 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
     }
 
-    public void performLogin(View view)
+    public void performLogin(View view) throws MalformedURLException
     {
         username = (EditText)findViewById(R.id.editText6);
         password = (EditText)findViewById(R.id.editText7);
 
         if(validate(username.getText().toString(), password.getText().toString()))
         {
-            sharedPreferences = getSharedPreferences("SmartMeetings", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("name", username.toString());
-            editor.putString("password", password.toString());
-            editor.commit();
-            System.out.println("Starting Activity");
-            Intent in = new Intent(this, MainActivity.class);
-            startActivity(in);
+
         }
         else
         {
@@ -56,16 +53,46 @@ public class Login extends AppCompatActivity {
         }
     }
 
-    public boolean validate(String username, String password)
+    public boolean validate(String username, String password) throws MalformedURLException
     {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("username", username);
+        params.put("password", password);
+
+        Utils.GetRequester getRequester = new Utils.GetRequester(
+                this.getApplicationContext()
+                ,"auth",
+                new Utils.GetRequester.TaskListener() {
+            @Override
+            public void onFinished(ArrayList<HashMap<String, String>> result, Context context) {
+                HashMap<String, String> res = result.get(0);
+                System.out.println("status");
+                System.out.println(res.get("status"));
+                if(res.get("status").equals("true")) {
+                    sharedPreferences = getSharedPreferences("SmartMeetings", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("name", res.get("username"));
+                    editor.putString("password", res.get("password"));
+                    editor.commit();
+                    System.out.println("Starting Activity");
+                    Intent in = new Intent(context, MainActivity.class);
+                    startActivity(in);
+                } else {
+                    // invalid login
+                }
+            }
+        });
+
+        getRequester.execute(params);
+
         networkAcess network = new networkAcess();
         System.out.println("Username: "+username + " password "+ password);
         String body = network.execute(username,password).toString();
         System.out.println("returned body "+ body);
-            if(body.equals("true"))
-            {
-                return true;
-            }
+        if(body.equals("true"))
+        {
+            return true;
+        }
         return false;
     }
 
