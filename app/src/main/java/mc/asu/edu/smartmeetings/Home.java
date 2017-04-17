@@ -1,12 +1,16 @@
 package mc.asu.edu.smartmeetings;
 
 import android.Manifest;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +25,7 @@ public class Home extends AppCompatActivity {
     public static final int ASK_MULTIPLE_PERMISSION_REQUEST_CODE =1;
     gpsService service;
     SharedPreferences preferences;
+    int mId = 5;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +54,25 @@ public class Home extends AppCompatActivity {
         TextView view = (TextView) findViewById(R.id.username);
         view.append("Welcome, "+name);
 
+        NotificationCompat.Builder appBuilder =  new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.notification_icon)
+                .setContentTitle("New Sign-In")
+                .setContentText("Hi you have signed in successfully :)");
+        Intent resultIntent = new Intent(this, NoteTakingActivity.class);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addParentStack(NoteTakingActivity.class);
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent =
+                stackBuilder.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+        appBuilder.setContentIntent(resultPendingIntent);
+        NotificationManager mNotificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+// mId allows you to update the notification later on.
 
+        mNotificationManager.notify(mId, appBuilder.build());
     }
     @Override
     public void onRequestPermissionsResult(int requestCode,
