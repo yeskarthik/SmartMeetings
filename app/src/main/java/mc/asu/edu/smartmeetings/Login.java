@@ -42,18 +42,10 @@ public class Login extends AppCompatActivity {
     {
         username = (EditText)findViewById(R.id.editText6);
         password = (EditText)findViewById(R.id.editText7);
-
-        if(validate(username.getText().toString(), password.getText().toString()))
-        {
-
-        }
-        else
-        {
-            System.out.println("false password");
-        }
+        validate(username.getText().toString(), password.getText().toString());
     }
 
-    public boolean validate(String username, String password) throws MalformedURLException
+    public void validate(String username, String password) throws MalformedURLException
     {
         Map<String, String> params = new HashMap<String, String>();
         params.put("username", username);
@@ -75,7 +67,7 @@ public class Login extends AppCompatActivity {
                     editor.putString("password", res.get("password"));
                     editor.commit();
                     System.out.println("Starting Activity");
-                    Intent in = new Intent(context, MainActivity.class);
+                    Intent in = new Intent(context, Home.class);
                     startActivity(in);
                 } else {
                     // invalid login
@@ -84,40 +76,9 @@ public class Login extends AppCompatActivity {
         });
 
         getRequester.execute(params);
-
-        networkAcess network = new networkAcess();
-        System.out.println("Username: "+username + " password "+ password);
-        String body = network.execute(username,password).toString();
-        System.out.println("returned body "+ body);
-        if(body.equals("true"))
-        {
-            return true;
-        }
-        return false;
     }
 
-    class networkAcess extends AsyncTask<String, Void, String>
-    {
 
-        @Override
-        protected String doInBackground(String... params) {
-            OkHttpClient httpClient = new OkHttpClient();
-            System.out.println("Querying with "+params[0] + " " +params[1]);
-            String url=API_URL+"auth"+"?username="+params[0]+"&password="+params[1];
-            Request request = new Request.Builder().url(url).build();
-            try {
-                Response response = httpClient.newCall(request).execute();
-                String body = response.body().string();
-                System.out.println("Received response: " + body);
-                return body;
-            }
-            catch(Exception e)
-            {
-                System.out.println(e);
-            }
-            return null;
-        }
-    }
 
 
 

@@ -11,9 +11,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launch"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launch_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".viewSchedule" />
@@ -33,7 +33,11 @@
         <activity
             android:name=".NoteTakingActivity"
             android:label="@string/title_activity_note_taking"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="mc.asu.edu.smartmeetings.Home" />
+        </activity>
         <activity android:name=".Login" android:label="Login" android:theme="@style/AppTheme.NoActionBar">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
