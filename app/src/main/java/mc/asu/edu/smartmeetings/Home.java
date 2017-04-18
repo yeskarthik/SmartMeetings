@@ -24,6 +24,7 @@ public class Home extends AppCompatActivity {
 
     public static final int ASK_MULTIPLE_PERMISSION_REQUEST_CODE =1;
     gpsService service;
+    pollService poll_service;
     SharedPreferences preferences;
     int mId = 5;
     @Override
@@ -44,8 +45,12 @@ public class Home extends AppCompatActivity {
         else
         {
             System.out.println("Permissions were granted, starting service");
+            poll_service = new pollService(this);
+            Intent intent = new Intent(Intent.ACTION_SYNC, null, this, mainService.class);
+            startService(intent);
             service = new gpsService(this);
             service.startService();
+
         }
 
         preferences = getSharedPreferences("SmartMeetings", Context.MODE_PRIVATE);
@@ -89,6 +94,8 @@ public class Home extends AppCompatActivity {
 
                     service = new gpsService(this);
                     service.startService();
+                    poll_service = new pollService(this);
+                    poll_service.getUsername();
                 } else {
 
                     // permission denied, boo! Disable the

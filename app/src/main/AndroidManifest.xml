@@ -32,7 +32,7 @@
         <service
             android:name=".gpsLocation"
             android:exported="false" />
-
+        <service android:name=".mainService" android:exported="false"/>
         <activity
             android:name=".NoteTakingActivity"
             android:label="@string/title_activity_note_taking"

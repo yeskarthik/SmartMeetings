@@ -43,7 +43,6 @@ public gpsLocation()
         try
         {
             getWeatherUpdates(getApplicationContext());
-            checkPolls(getApplicationContext());
             gpsService mService = new gpsService(getApplicationContext());
             sendLocation(getApplicationContext(), mService.startService());
 
@@ -53,24 +52,6 @@ public gpsLocation()
             System.out.println(e);
         }
 
-
-    }
-
-    void sendLocation(Context context, Location location) throws MalformedURLException
-    {
-
-        long timestamp;
-
-        latitude = location.getLatitude();
-        longitude = location.getLongitude();
-        timestamp = location.getTime(); // this is going to give us time in milliseconds.
-        System.out.println(timestamp + " latitude " + latitude + " longitude " + longitude );
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("username", "something");
-        params.put("latitude", Double.toString(location.getLatitude()));
-        params.put("longitude", Double.toString(location.getLongitude()));
-        Utils.PostRequester postRequest = new Utils.PostRequester(this.getApplicationContext(), "location", null);
-        postRequest.execute(params);
     }
 
     void getWeatherUpdates(Context context) throws IOException
@@ -84,27 +65,22 @@ public gpsLocation()
 
     }
 
-    void checkPolls(Context context) throws MalformedURLException
+    void sendLocation(Context context, Location location) throws MalformedURLException
     {
-        OkHttpClient httpClient = new OkHttpClient();
-        String url = "";
-        Utils.GetRequester getRequester = new Utils.GetRequester(
-                this.getApplicationContext()
-                ,"polls",
-                new Utils.GetRequester.TaskListener() {
-                    @Override
-                    public void onFinished(ArrayList<HashMap<String, String>> result, Context context) {
-                        HashMap<String, String> res = result.get(0);
-                        System.out.println("status");
-                        System.out.println(res.get("status"));
-                        if(res.get("status").equals("true")) {
-                            String[] bundle = {res.get("question"),res.get("a"),res.get("b"),res.get("c"), res.get("d")};
-                            Intent in = new Intent(context, Home.class); //change to Poll.class
-                            in.putExtra("bundle",bundle);
-                            startActivity(in);
-                        }
-                    }
-                });
+
+        long timestamp;
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+        timestamp = location.getTime(); // this is going to give us time in milliseconds.
+        System.out.println(timestamp + " latitude " + latitude + " longitude " + longitude );
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("username", "something");
+        params.put("latitude", Double.toString(location.getLatitude()));
+        params.put("longitude", Double.toString(location.getLongitude()));
+        Utils.PostRequester postRequest = new Utils.PostRequester(this.getApplicationContext(), "location", null);
+        postRequest.execute(params);
     }
+
+
 
 }
