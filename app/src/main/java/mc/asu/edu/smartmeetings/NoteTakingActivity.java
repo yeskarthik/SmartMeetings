@@ -2,6 +2,7 @@ package mc.asu.edu.smartmeetings;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,7 +18,9 @@ import java.util.Map;
 
 public class NoteTakingActivity extends AppCompatActivity {
 
-
+    SharedPreferences preferences;
+    String name;
+    String password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,9 +37,13 @@ public class NoteTakingActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        preferences = getSharedPreferences("SmartMeetings",Context.MODE_PRIVATE);
+        name = preferences.getString("name","");
+        password = preferences.getString("password","");
+
     }
 
-    protected  void save_note(View view) {
+    protected  void save_note(View view) throws MalformedURLException {
         EditText note_title =(EditText)findViewById(R.id.notetitle);
         EditText note = (EditText)findViewById(R.id.notepad);
         EditText email = (EditText)findViewById(R.id.email);
@@ -48,7 +55,7 @@ public class NoteTakingActivity extends AppCompatActivity {
         params.put("note_text",note.getText().toString());
 
         System.out.println("hello");
-        Utils.PostRequester requester = new Utils.PostRequester(this.getApplicationContext(), "note");
+        Utils.PostRequester requester = new Utils.PostRequester(this.getApplicationContext(), "note", null);
         requester.execute(params);
     }
 
@@ -76,7 +83,7 @@ public class NoteTakingActivity extends AppCompatActivity {
             }
         });
         Map<String, String> params = new HashMap<String, String>();
-        params.put("username", "somethin");
+        params.put("username", name);
 
         requester.execute(params);
     }

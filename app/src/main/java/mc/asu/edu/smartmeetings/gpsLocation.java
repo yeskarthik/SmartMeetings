@@ -39,22 +39,24 @@ public gpsLocation()
     protected void onHandleIntent(Intent workIntent) {
         // Gets data from the incoming Intent
         //sendLocation to our AWS server over network using sendLocation function.
+
         try
         {
             getWeatherUpdates(getApplicationContext());
             checkPolls(getApplicationContext());
+            gpsService mService = new gpsService(getApplicationContext());
+            sendLocation(getApplicationContext(), mService.startService());
+
         }
-        catch(IOException e)
+        catch(Exception e)
         {
             System.out.println(e);
         }
-        gpsService mService = new gpsService(getApplicationContext());
-        sendLocation(getApplicationContext(), mService.startService());
 
 
     }
 
-    void sendLocation(Context context, Location location)
+    void sendLocation(Context context, Location location) throws MalformedURLException
     {
 
         long timestamp;
@@ -67,7 +69,7 @@ public gpsLocation()
         params.put("username", "something");
         params.put("latitude", Double.toString(location.getLatitude()));
         params.put("longitude", Double.toString(location.getLongitude()));
-        Utils.PostRequester postRequest = new Utils.PostRequester(this.getApplicationContext(), "location");
+        Utils.PostRequester postRequest = new Utils.PostRequester(this.getApplicationContext(), "location", null);
         postRequest.execute(params);
     }
 

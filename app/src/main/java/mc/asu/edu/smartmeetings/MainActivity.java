@@ -27,7 +27,9 @@ import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -61,74 +63,29 @@ public class MainActivity extends AppCompatActivity {
         params.put("email", email.getText().toString());
         params.put("phone", phone.getText().toString());
 
-        Utils.PostRequester request = new Utils.PostRequester(this.getApplicationContext(), "user");
+        Utils.PostRequester request = new Utils.PostRequester(this.getApplicationContext(), "user", null);
         request.execute(params);
 
     }
 
     protected void get_users(View view) throws MalformedURLException, IOException {
-        GetRequester request = new GetRequester(this, "users");
-        System.out.println("CHOWMEIN");
-        String data = request.execute().toString();
-        System.out.println(data);
-    }
 
-    private class GetRequester extends AsyncTask<String, Void, String> {
+        Utils.GetRequester request = new Utils.GetRequester(this.getApplicationContext(), "users",
+            new Utils.GetRequester.TaskListener() {
+                @Override
+                public void onFinished(ArrayList<HashMap<String, String>> result, Context context) {
+                    List<String> d = new ArrayList<String>();
+                    for(HashMap<String, String> res: result) {
+                        d.add(res.get("username"));
+                    }
 
-        Context context;
-        URL url;
-
-        private GetRequester(Context context, String path) {
-            this.context = context.getApplicationContext();
-            try {
-                this.url = new URL(API_URL+path);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-        }
-
-        @Override
-        protected String doInBackground(String...params) {
-
-            try {
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-
-                InputStream in = urlConnection.getInputStream();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                char[] buffer = new char[1024];
-
-                String jsonString = new String();
-
-                StringBuilder sb = new StringBuilder();
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    sb.append(line+"\n");
+                    Intent intent = new Intent(context, DisplayUsers.class);
+                    intent.putExtra(EXTRA_MESSAGE, d.toArray(new String[d.size()]));
+                    startActivity(intent);
                 }
-                reader.close();
-                in.close();
-                jsonString = sb.toString();
-                System.out.println("JSON: " + jsonString);
-
-
-                System.out.println("RESPONSE" + urlConnection.getResponseCode());
-                urlConnection.disconnect();
-                return jsonString;
-            }
-
-
-            catch(Exception e) {
-                System.out.println(e);
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String data){
-            Intent intent = new Intent(context, DisplayUsers.class);
-            intent.putExtra(EXTRA_MESSAGE,data.split("\\], \\["));
-            startActivity(intent);
-        }
+            });
+        request.execute(new HashMap());
 
     }
+
 }
