@@ -3,6 +3,7 @@ package mc.asu.edu.smartmeetings;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -11,6 +12,8 @@ import android.os.Bundle;
 import android.os.SystemClock;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,16 +39,18 @@ public gpsLocation()
     protected void onHandleIntent(Intent workIntent) {
         // Gets data from the incoming Intent
         //sendLocation to our AWS server over network using sendLocation function.
-        gpsService mService = new gpsService(getApplicationContext());
-        sendLocation(getApplicationContext(), mService.startService());
         try
         {
             getWeatherUpdates(getApplicationContext());
+            checkPolls(getApplicationContext());
         }
         catch(IOException e)
         {
             System.out.println(e);
         }
+        gpsService mService = new gpsService(getApplicationContext());
+        sendLocation(getApplicationContext(), mService.startService());
+
 
     }
 
@@ -75,6 +80,29 @@ public gpsLocation()
         String body = response.body().string();
         System.out.println("Received response: "+body);
 
+    }
+
+    void checkPolls(Context context) throws MalformedURLException
+    {
+        OkHttpClient httpClient = new OkHttpClient();
+        String url = "";
+        Utils.GetRequester getRequester = new Utils.GetRequester(
+                this.getApplicationContext()
+                ,"polls",
+                new Utils.GetRequester.TaskListener() {
+                    @Override
+                    public void onFinished(ArrayList<HashMap<String, String>> result, Context context) {
+                        HashMap<String, String> res = result.get(0);
+                        System.out.println("status");
+                        System.out.println(res.get("status"));
+                        if(res.get("status").equals("true")) {
+                            String[] bundle = {res.get("question"),res.get("a"),res.get("b"),res.get("c"), res.get("d")};
+                            Intent in = new Intent(context, Home.class); //change to Poll.class
+                            in.putExtra("bundle",bundle);
+                            startActivity(in);
+                        }
+                    }
+                });
     }
 
 }
