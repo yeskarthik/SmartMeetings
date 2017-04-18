@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         params.put("email", email.getText().toString());
         params.put("phone", phone.getText().toString());
 
-        Utils.PostRequester request = new Utils.PostRequester(this.getApplicationContext(), "user");
+        Utils.PostRequester request = new Utils.PostRequester(this.getApplicationContext(), "user", null);
         request.execute(params);
 
     }
@@ -88,62 +88,4 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /*private class GetRequester extends AsyncTask<String, Void, String> {
-
-        Context context;
-        URL url;
-
-        private GetRequester(Context context, String path) {
-            this.context = context.getApplicationContext();
-            try {
-                this.url = new URL(API_URL+path);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-        }
-
-        @Override
-        protected String doInBackground(String...params) {
-
-            try {
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-
-                InputStream in = urlConnection.getInputStream();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                char[] buffer = new char[1024];
-
-                String jsonString = new String();
-
-                StringBuilder sb = new StringBuilder();
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    sb.append(line+"\n");
-                }
-                reader.close();
-                in.close();
-                jsonString = sb.toString();
-                System.out.println("JSON: " + jsonString);
-
-
-                System.out.println("RESPONSE" + urlConnection.getResponseCode());
-                urlConnection.disconnect();
-                return jsonString;
-            }
-
-
-            catch(Exception e) {
-                System.out.println(e);
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String data){
-            Intent intent = new Intent(context, DisplayUsers.class);
-            intent.putExtra(EXTRA_MESSAGE,data.split("\\], \\["));
-            startActivity(intent);
-        }
-
-    }*/
 }

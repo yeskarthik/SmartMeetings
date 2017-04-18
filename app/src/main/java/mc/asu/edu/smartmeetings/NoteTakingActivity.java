@@ -43,7 +43,7 @@ public class NoteTakingActivity extends AppCompatActivity {
 
     }
 
-    protected  void save_note(View view) {
+    protected  void save_note(View view) throws MalformedURLException {
         EditText note_title =(EditText)findViewById(R.id.notetitle);
         EditText note = (EditText)findViewById(R.id.notepad);
         EditText email = (EditText)findViewById(R.id.email);
@@ -55,7 +55,7 @@ public class NoteTakingActivity extends AppCompatActivity {
         params.put("note_text",note.getText().toString());
 
         System.out.println("hello");
-        Utils.PostRequester requester = new Utils.PostRequester(this.getApplicationContext(), "note");
+        Utils.PostRequester requester = new Utils.PostRequester(this.getApplicationContext(), "note", null);
         requester.execute(params);
     }
 
