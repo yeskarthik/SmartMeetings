@@ -20,16 +20,24 @@
         <ListView
             android:id="@+id/mobile_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="382dp" >
         </ListView>
+
+        <Button
+            android:id="@+id/add_participants_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="addParticipants"
+            android:text="Add Participants" />
 
     </LinearLayout>
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/label"
+        android:id="@+id/user_list_item_holder"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="400dp"
         android:padding="10dip"
         android:textSize="16dip"
-        android:textStyle="bold" >
+        android:textStyle="bold"
+        android:layout_alignParentEnd="true">
     </TextView>
 </RelativeLayout>

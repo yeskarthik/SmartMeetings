@@ -27,7 +27,9 @@ import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -117,13 +119,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void get_users(View view) throws MalformedURLException, IOException {
-        GetRequester request = new GetRequester(this, "users");
-        System.out.println("CHOWMEIN");
-        String data = request.execute().toString();
-        System.out.println(data);
+
+        Utils.GetRequester request = new Utils.GetRequester(this.getApplicationContext(), "users",
+            new Utils.GetRequester.TaskListener() {
+                @Override
+                public void onFinished(ArrayList<HashMap<String, String>> result, Context context) {
+                    List<String> d = new ArrayList<String>();
+                    for(HashMap<String, String> res: result) {
+                        d.add(res.get("username"));
+                    }
+
+                    Intent intent = new Intent(context, DisplayUsers.class);
+                    intent.putExtra(EXTRA_MESSAGE, d.toArray(new String[d.size()]));
+                    startActivity(intent);
+                }
+            });
+        request.execute(new HashMap());
+
     }
 
-    private class GetRequester extends AsyncTask<String, Void, String> {
+    /*private class GetRequester extends AsyncTask<String, Void, String> {
 
         Context context;
         URL url;
@@ -180,5 +195,5 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
-    }
+    }*/
 }
