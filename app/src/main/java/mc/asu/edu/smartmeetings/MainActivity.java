@@ -42,64 +42,14 @@ public class MainActivity extends AppCompatActivity {
     public String[] passMessage = null;
     public static final String API_URL = "http://smartmeetings-server.jgscuqju3c.us-west-2.elasticbeanstalk.com/";
     EditText name, username, password, email, phone;
-    public static final int ASK_MULTIPLE_PERMISSION_REQUEST_CODE =1;
-    gpsService service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // REQUEST ALL PERMISSIONS HERE
-
-        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR);
-        int permissionCheck1 = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR);
-        int permissionCheck2 = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
-        System.out.println("Seeking Permissions");
-        if(permissionCheck != PackageManager.PERMISSION_GRANTED)
-        {
-            System.out.println("WRITE Calendar permission denied");
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_CALENDAR, Manifest.permission.READ_CALENDAR, Manifest.permission.ACCESS_FINE_LOCATION}, ASK_MULTIPLE_PERMISSION_REQUEST_CODE);
-        }
-        else
-        {
-            System.out.println("Permissions were granted, starting service");
-            service = new gpsService(this);
-            service.startService();
-        }
-
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case ASK_MULTIPLE_PERMISSION_REQUEST_CODE: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
-                    System.out.println("Permission granted da thambi");
-
-                    service = new gpsService(this);
-                    service.startService();
-                } else {
-
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-
-                    //If permission has been denied, create a pop-up to quit the app.
-                    System.out.println("Permission denied da thambi");
-                }
-                return;
-            }
-
-            // other 'case' lines to check for other
-            // permissions this app might request
-        }
-    }
     protected void create_user(View view) throws IOException {
 
         name =(EditText)findViewById(R.id.editText4);
