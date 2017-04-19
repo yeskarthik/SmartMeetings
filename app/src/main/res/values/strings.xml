@@ -4,4 +4,5 @@
     <string name="title_activity_display_users">DisplayUsers</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_note_taking">NoteTakingActivity</string>
+    <string name="title_activity_list_meet_locations">ListMeetLocations</string>
 </resources>

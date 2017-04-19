@@ -20,10 +20,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.RemoteMessage;
+import com.pusher.android.PusherAndroid;
+import com.pusher.android.notifications.PushNotificationRegistration;
+import com.pusher.android.notifications.fcm.FCMPushNotificationReceivedListener;
+import com.pusher.android.notifications.interests.InterestSubscriptionChangeListener;
+import com.pusher.android.notifications.tokens.PushNotificationRegistrationListener;
+
 public class Home extends AppCompatActivity {
 
     public static final int ASK_MULTIPLE_PERMISSION_REQUEST_CODE =1;
     gpsService service;
+    pollService poll_service;
     SharedPreferences preferences;
     int mId = 5;
     @Override
@@ -44,8 +53,10 @@ public class Home extends AppCompatActivity {
         else
         {
             System.out.println("Permissions were granted, starting service");
-            service = new gpsService(this);
-            service.startService();
+            startPolling();
+            //service = new gpsService(this);
+           // service.startService();
+
         }
 
         preferences = getSharedPreferences("SmartMeetings", Context.MODE_PRIVATE);
@@ -87,8 +98,10 @@ public class Home extends AppCompatActivity {
                     // contacts-related task you need to do.
                     System.out.println("Permission granted da thambi");
 
-                    service = new gpsService(this);
-                    service.startService();
+                    //service = new gpsService(this);
+                    //service.startService();
+                    startPolling();
+
                 } else {
 
                     // permission denied, boo! Disable the
@@ -102,6 +115,53 @@ public class Home extends AppCompatActivity {
 
             // other 'case' lines to check for other
             // permissions this app might request
+        }
+    }
+
+    public void startPolling()
+    {
+        String token = FirebaseInstanceId.getInstance().getToken();
+        System.out.println("Registered with token "+token);
+        try
+        {
+            PusherAndroid pusher = new PusherAndroid("bdf3e36a58647e366f38");
+            PushNotificationRegistration nativePusher = pusher.nativePusher();
+            nativePusher.registerFCM(this, new PushNotificationRegistrationListener() {
+                @Override
+                public void onSuccessfulRegistration() {
+                    System.out.println("Successfully registered with Pusher server");
+                }
+
+                @Override
+                public void onFailedRegistration(int statusCode, String response) {
+                    System.out.println(
+                            "Registration with Pusher failure " + statusCode +
+                                    " " + response
+                    );
+                }
+            });
+            nativePusher.subscribe("polls", new InterestSubscriptionChangeListener() {
+                @Override
+                public void onSubscriptionChangeSucceeded() {
+                    System.out.println("Success! Ready to receive polls");
+                }
+
+                @Override
+                public void onSubscriptionChangeFailed(int statusCode, String response) {
+                    System.out.println("poll failure " + statusCode + " with" + response);
+                }
+            });
+            nativePusher.setFCMListener(new FCMPushNotificationReceivedListener() {
+                @Override
+                public void onMessageReceived(RemoteMessage remoteMessage) {
+                    // do something magical 🔮
+                    System.out.println("Received from server "+ remoteMessage.getNotification().getBody() + " "+remoteMessage.getNotification().getTitle());
+                }
+            });
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
         }
     }
     @Override

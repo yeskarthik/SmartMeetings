@@ -20,7 +20,10 @@
         <activity
             android:name=".MainActivity"
             android:label="MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+
+            </activity>
+
         <activity
             android:name=".DisplayUsers"
             android:label="@string/title_activity_display_users"
@@ -29,6 +32,20 @@
         <service
             android:name=".gpsLocation"
             android:exported="false" />
+        <service android:name=".mainService" android:exported="false"/>
+        <service
+            android:name="com.pusher.android.notifications.fcm.FCMMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service
+            android:name="com.pusher.android.notifications.fcm.FCMInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
 
         <activity
             android:name=".NoteTakingActivity"
@@ -38,13 +55,21 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="mc.asu.edu.smartmeetings.Home" />
         </activity>
-        <activity android:name=".Login" android:label="Login" android:theme="@style/AppTheme.NoActionBar">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+        <activity
+            android:name=".Login"
+            android:label="Login"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity android:name=".Home"/>
+        <activity android:name=".Home" />
+        <activity android:name=".createMeeting" />
+        <activity android:name=".polls"></activity>
+        <activity android:name=".ListMeetLocationsInput">
+        </activity>
+        <activity android:name=".ListMeetLocations"></activity>
     </application>
 
 </manifest>

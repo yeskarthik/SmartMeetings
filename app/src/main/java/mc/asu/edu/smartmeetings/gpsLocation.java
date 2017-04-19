@@ -3,6 +3,7 @@ package mc.asu.edu.smartmeetings;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -11,6 +12,8 @@ import android.os.Bundle;
 import android.os.SystemClock;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,34 +39,19 @@ public gpsLocation()
     protected void onHandleIntent(Intent workIntent) {
         // Gets data from the incoming Intent
         //sendLocation to our AWS server over network using sendLocation function.
-        gpsService mService = new gpsService(getApplicationContext());
-        sendLocation(getApplicationContext(), mService.startService());
+
         try
         {
             getWeatherUpdates(getApplicationContext());
+            gpsService mService = new gpsService(getApplicationContext());
+            sendLocation(getApplicationContext(), mService.startService());
+
         }
-        catch(IOException e)
+        catch(Exception e)
         {
             System.out.println(e);
         }
 
-    }
-
-    void sendLocation(Context context, Location location)
-    {
-
-        long timestamp;
-
-        latitude = location.getLatitude();
-        longitude = location.getLongitude();
-        timestamp = location.getTime(); // this is going to give us time in milliseconds.
-        System.out.println(timestamp + " latitude " + latitude + " longitude " + longitude );
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("username", "something");
-        params.put("latitude", Double.toString(location.getLatitude()));
-        params.put("longitude", Double.toString(location.getLongitude()));
-        Utils.PostRequester postRequest = new Utils.PostRequester(this.getApplicationContext(), "location");
-        postRequest.execute(params);
     }
 
     void getWeatherUpdates(Context context) throws IOException
@@ -76,5 +64,23 @@ public gpsLocation()
         System.out.println("Received response: "+body);
 
     }
+
+    void sendLocation(Context context, Location location) throws MalformedURLException
+    {
+
+        long timestamp;
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+        timestamp = location.getTime(); // this is going to give us time in milliseconds.
+        System.out.println(timestamp + " latitude " + latitude + " longitude " + longitude );
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("username", "something");
+        params.put("latitude", Double.toString(location.getLatitude()));
+        params.put("longitude", Double.toString(location.getLongitude()));
+        Utils.PostRequester postRequest = new Utils.PostRequester(this.getApplicationContext(), "location", null);
+        postRequest.execute(params);
+    }
+
+
 
 }
