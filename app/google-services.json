@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "72160716836",
+    "firebase_url": "https://fir-smartmeetings.firebaseio.com",
+    "project_id": "firebase-smartmeetings",
+    "storage_bucket": "firebase-smartmeetings.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:72160716836:android:6a312ecf6e87dfd0",
+        "android_client_info": {
+          "package_name": "mc.asu.edu.smartmeetings"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "72160716836-5r9k7hgut9bjk0tpds0m1u8vi0otq2lj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPBoRmV0tq70Id6vKD7_6nlUC90Vbr8CU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

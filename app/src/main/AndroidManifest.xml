@@ -33,6 +33,20 @@
             android:name=".gpsLocation"
             android:exported="false" />
         <service android:name=".mainService" android:exported="false"/>
+        <service
+            android:name="com.pusher.android.notifications.fcm.FCMMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service
+            android:name="com.pusher.android.notifications.fcm.FCMInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".NoteTakingActivity"
             android:label="@string/title_activity_note_taking"
