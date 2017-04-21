@@ -18,7 +18,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".viewSchedule" />
         <activity
-            android:name=".MainActivity"
+            android:name=".RegisterUser"
             android:label="MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -75,8 +75,18 @@
             <intent-filter>
                 <action android:name="mc.asu.edu.smartmeetings.TARGET_NOTIFICATION" />
                 <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>>
+            </intent-filter>
+            >
         </activity>
+        <activity android:name=".CreateQuickQuestions" />
+        <activity android:name=".SubmitQuickQuestion">
+            <intent-filter>
+                <action android:name="mc.asu.edu.smartmeetings.TARGET_NOTIFICATION_QQ" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ListQuickQuestions" />
+        <activity android:name=".ViewQuickQuestion"></activity>
     </application>
 
 </manifest>

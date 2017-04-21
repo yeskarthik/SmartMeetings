@@ -31,9 +31,19 @@
         android:id="@+id/create_poll_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="110dp"
         android:text="Create Poll"
-        android:onClick="createPoll"
-        android:layout_below="@+id/creator_name_detail"
-        android:layout_centerHorizontal="true" />
+        android:layout_marginStart="41dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="110dp" />
+
+    <Button
+        android:id="@+id/create_qq_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create Question"
+        android:layout_alignBaseline="@+id/create_poll_button"
+        android:layout_alignBottom="@+id/create_poll_button"
+        android:layout_toEndOf="@+id/create_poll_button"
+        android:layout_marginStart="41dp" />
 </RelativeLayout>

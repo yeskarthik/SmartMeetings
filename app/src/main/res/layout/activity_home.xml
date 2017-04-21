@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="mc.asu.edu.smartmeetings.Home">
 
     <TextView
@@ -22,10 +23,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="startNavigation"
+        android:layout_marginBottom="45dp"
+        android:text="Navigate"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="46dp"
-        android:text="Navigate" />
+        android:layout_toEndOf="@+id/weather_box" />
 
     <TextView
         android:id="@+id/weather_box"
@@ -35,4 +36,27 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="33dp"
         android:text="Weather" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="62dp"
+        android:maxHeight="100dp"
+        android:maxWidth="250dp"
+        android:minHeight="100dp"
+        android:minWidth="200dp"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:layout_above="@+id/button3"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/launch_camera_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="launchCamera"
+        android:text="Take Photo"
+        android:layout_below="@+id/imageView"
+        android:layout_toStartOf="@+id/weather_box" />
+
 </RelativeLayout>

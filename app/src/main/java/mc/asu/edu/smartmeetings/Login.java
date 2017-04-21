@@ -3,29 +3,15 @@ package mc.asu.edu.smartmeetings;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-import java.io.BufferedWriter;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-
-import static mc.asu.edu.smartmeetings.Login.API_URL;
 
 public class Login extends AppCompatActivity {
 
@@ -78,8 +64,8 @@ public class Login extends AppCompatActivity {
         getRequester.execute(params);
     }
 
-
-
-
-
+    protected void signUp(View view) {
+        Intent in = new Intent(this, RegisterUser.class);
+        startActivity(in);
+    }
 }

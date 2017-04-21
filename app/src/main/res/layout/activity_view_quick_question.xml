@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="mc.asu.edu.smartmeetings.ViewQuickQuestion">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:orientation="vertical"
+        tools:context=".ViewQuickQuestion"
+        android:layout_below="@+id/vqq_question_text"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="19dp">
+
+        <ListView
+            android:id="@+id/view_quick_question_list"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_marginBottom="12dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"></ListView>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/vqq_question_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="35dp"
+        android:text="TextView" />
+
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/view_quick_question_textview"
+        android:layout_width="fill_parent"
+        android:layout_height="400dp"
+        android:padding="10dip"
+        android:textSize="16dip"
+        android:textStyle="bold" >
+    </TextView>
+
+</RelativeLayout>

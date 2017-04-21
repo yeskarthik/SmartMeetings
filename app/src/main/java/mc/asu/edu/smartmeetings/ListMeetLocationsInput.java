@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -144,7 +145,17 @@ public class ListMeetLocationsInput extends AppCompatActivity {
             }
         });
 
-
+        Button findButton = (Button) findViewById(R.id.button3);
+        findButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    findMeetingRooms(view);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
@@ -154,7 +165,7 @@ public class ListMeetLocationsInput extends AppCompatActivity {
         super.onSaveInstanceState(savedInstanceState);
     }
 
-    protected void findMeetingRooms(View view) throws Exception {
+    void findMeetingRooms(View view) throws Exception {
         EditText fromDate = (EditText) findViewById(R.id.from_meeting_date);
         EditText toDate = (EditText) findViewById(R.id.to_meeting_date);
         EditText meetingName = (EditText) findViewById(R.id.meetingName);

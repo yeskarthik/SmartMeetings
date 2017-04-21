@@ -38,11 +38,8 @@ public gpsLocation()
         try
         {
             getWeatherUpdates(getApplicationContext());
-
             gpsService mService = new gpsService(getApplicationContext());
-
             sendLocation(getApplicationContext(), mService.startService());
-
         }
         catch(Exception e)
         {

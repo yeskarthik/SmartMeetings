@@ -65,9 +65,17 @@ public class DisplayUsers extends Activity {
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         listView.setItemsCanFocus(false);
         listView.setAdapter(adapter);
+
+        Button addParticipantsButton = (Button) findViewById(R.id.add_participants_button);
+        addParticipantsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addParticipants();
+            }
+        });
     }
 
-    protected void addParticipants(View view) {
+    void addParticipants() {
         SparseBooleanArray selectedItems = listView.getCheckedItemPositions();
         ArrayList<String> selectedUsers = new ArrayList<String>();
         for (int i=0; i<selectedItems.size(); i++) {
