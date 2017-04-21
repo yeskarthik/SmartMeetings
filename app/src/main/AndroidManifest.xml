@@ -62,7 +62,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".Home" />
-        <activity android:name=".createMeeting" />
         <activity android:name=".polls" />
         <activity android:name=".ListMeetLocationsInput" />
         <activity android:name=".ListMeetLocations" />

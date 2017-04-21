@@ -28,8 +28,6 @@ import com.pusher.android.notifications.fcm.FCMPushNotificationReceivedListener;
 import com.pusher.android.notifications.interests.InterestSubscriptionChangeListener;
 import com.pusher.android.notifications.tokens.PushNotificationRegistrationListener;
 
-import java.net.MalformedURLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -71,8 +69,8 @@ public class Home extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            //service = new gpsService(this);
-           // service.startService();
+            service = new gpsService(this, findViewById(R.id.weather_box));
+            service.startService();
 
         }
 
@@ -113,8 +111,11 @@ public class Home extends AppCompatActivity {
                     // contacts-related task you need to do.
                     System.out.println("Permission granted da thambi");
 
-                    //service = new gpsService(this);
+                    //service = new gpsService(this, findViewById(R.id.weather_box));
                     //service.startService();
+
+                    Intent intent = new Intent(Intent.ACTION_SYNC, null, this, gpsLocation.class);
+                    startService(intent);
                     try {
                         startPolling();
                     } catch (Exception e) {
@@ -215,6 +216,8 @@ public class Home extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.create_meeting:
                 //Intent in = new Intent(this,)
+                Intent inc = new Intent(this, DisplayUsers.class);
+                startActivity(inc);
                 return true;
             case R.id.camera:
                 //showHelp();
@@ -228,10 +231,6 @@ public class Home extends AppCompatActivity {
                 startActivity(ink);
                 return true;
             case R.id.quick_questions:
-                return true;
-            case R.id.list_meet_locations:
-                Intent inc = new Intent(this, ListMeetLocationsInput.class);
-                startActivity(inc);
                 return true;
             case R.id.view_meetings:
                 Intent inte = new Intent(this, ViewMeetings.class);

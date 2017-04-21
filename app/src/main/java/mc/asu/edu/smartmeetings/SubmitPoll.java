@@ -18,10 +18,12 @@ public class SubmitPoll extends AppCompatActivity {
     private TextView questionView;
     private RadioButton r1, r2, r3, r4;
     private String poll_id;
+    private Context appContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.appContext = getApplicationContext();
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         setContentView(R.layout.activity_submit_poll);
@@ -55,13 +57,14 @@ public class SubmitPoll extends AppCompatActivity {
         int answer = group.getCheckedRadioButtonId();
         RadioButton radioButton = (RadioButton) group.findViewById(answer);
         String radioId = (String) radioButton.getText();
-        System.out.println("ANSWER " + answer + "\n");
+        System.out.println("ANSWER " +  String.valueOf(radioId.substring(0,1))+ "\n");
         params.put("option", String.valueOf(radioId.substring(0,1)));
         try {
             Utils.PostRequester poster = new Utils.PostRequester(this.getApplicationContext(), "submitpoll", new Utils.PostRequester.TaskListener() {
                 @Override
                 public void onFinished(HashMap<String, String> result, Context context) {
-                    Intent intent = new Intent(context, Home.class);
+                    System.out.println("reached here");
+                    Intent intent = new Intent(appContext, Home.class);
                     startActivity(intent);
                 }
             });

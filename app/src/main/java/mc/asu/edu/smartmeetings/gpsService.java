@@ -10,6 +10,10 @@ import android.content.pm.PackageManager;
 import android.location.*;
 import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
+import android.view.View;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,11 +27,13 @@ public class gpsService {
     private Context context;
     private PendingIntent pendingIntent;
     Location location;
+    TextView weather;
     public gpsService(Context context)
     {
         this.context = context;
         Intent intent = new Intent(this.context, gpsLocation.class);
         pendingIntent = PendingIntent.getService(this.context, 0, intent, 0);
+        //weather = (TextView) viewById;
     }
 
     public Location startService()
@@ -73,4 +79,5 @@ public class gpsService {
 
         return location;
     }
+
 }

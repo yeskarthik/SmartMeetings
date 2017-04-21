@@ -55,7 +55,7 @@
         android:layout_below="@+id/findlabel"
         android:layout_marginTop="17dp"
         android:ems="10"
-        android:hint="Open house"
+        android:hint="Meeting name"
         android:inputType="textPersonName" />
 
 </RelativeLayout>

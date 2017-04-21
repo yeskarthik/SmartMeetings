@@ -61,6 +61,7 @@ public class Utils {
 
         @Override
         protected HashMap<String, String> doInBackground(Map... maps) {
+            System.out.println(this.url.toString());
             Map<String, String> param = maps[0];
             Builder formBody = new FormBody.Builder();
 
@@ -102,7 +103,7 @@ public class Utils {
                 }
                 return result;
             }
-            return null;
+            return result;
         }
 
         @Override
@@ -134,12 +135,16 @@ public class Utils {
 
         @Override
         protected ArrayList<HashMap<String, String>> doInBackground(Map... maps) {
-            Map<String, String> params = maps[0];
+            Map<String, String> params = new HashMap<String, String>();
+            if (maps.length > 0) {
+                params = maps[0];
+            }
             StringBuilder queryParams = new StringBuilder("?");
             for (Map.Entry<String, String> e: params.entrySet()) {
                 queryParams.append(String.format(e.getKey() +"=%s", URLEncoder.encode(e.getValue())));
                 queryParams.append("&");
             }
+
             String query = queryParams.toString();
             System.out.println(url.toString() + query);
             OkHttpClient httpClient = new OkHttpClient();

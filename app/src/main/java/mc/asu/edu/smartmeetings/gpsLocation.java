@@ -3,18 +3,13 @@ package mc.asu.edu.smartmeetings;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.location.Location;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.os.Bundle;
-import android.os.SystemClock;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,7 +38,9 @@ public gpsLocation()
         try
         {
             getWeatherUpdates(getApplicationContext());
+
             gpsService mService = new gpsService(getApplicationContext());
+
             sendLocation(getApplicationContext(), mService.startService());
 
         }
@@ -62,6 +59,18 @@ public gpsLocation()
         Response response = httpClient.newCall(request).execute();
         String body = response.body().string();
         System.out.println("Received response: "+body);
+
+        String weatherMain = "";
+        String weatherTemp = "";
+        try {
+            JSONObject jsonObject = new JSONObject(body);
+            weatherMain = jsonObject.getJSONArray("weather").getJSONObject(0).getString("main");
+            weatherTemp = jsonObject.getJSONObject("main").getString("temp");
+            System.out.println("weather: " + weatherMain + " " + weatherTemp);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
 
     }
 

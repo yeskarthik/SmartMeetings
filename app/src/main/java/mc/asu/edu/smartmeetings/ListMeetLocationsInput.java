@@ -30,6 +30,7 @@ public class ListMeetLocationsInput extends AppCompatActivity {
     EditText toDate;
     Date fromDateFormatted;
     Date toDateFormatted;
+    List<String> userList;
 
     TextView textView;
 
@@ -43,6 +44,10 @@ public class ListMeetLocationsInput extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_meet_locations_input);
+
+        Intent in = getIntent();
+        Bundle extras = in.getExtras();
+        userList = extras.getStringArrayList("userList");
 
         textView = (TextView)findViewById(R.id.findlabel);
         fromDate = (EditText) findViewById(R.id.from_meeting_date);
