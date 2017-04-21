@@ -49,7 +49,7 @@ public class NoteTakingActivity extends AppCompatActivity {
         EditText email = (EditText)findViewById(R.id.email);
 
         Map<String, String> params = new HashMap<String, String>();
-        params.put("username", "somethin");
+        params.put("username", name);
         params.put("email", email.getText().toString());
         params.put("note_title", note_title.getText().toString());
         params.put("note_text",note.getText().toString());
@@ -60,11 +60,10 @@ public class NoteTakingActivity extends AppCompatActivity {
     }
 
     protected void get_notes(View view) throws MalformedURLException {
-        EditText note_title =(EditText)findViewById(R.id.notetitle);
 
         Utils.GetRequester requester = new Utils.GetRequester(this, "note", new Utils.GetRequester.TaskListener() {
             @Override
-            public void onFinished(ArrayList<HashMap<String, String>> result, Context context) {
+            public void onFinished(ArrayList<HashMap<String, String>> result, final Context context) {
 
                 if (result.size() > 0) {
                     HashMap<String, String> res = result.get(0);

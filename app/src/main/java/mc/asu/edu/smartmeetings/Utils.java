@@ -89,17 +89,20 @@ public class Utils {
 
             HashMap<String, String> result = new HashMap<String, String>();
 
-            try {
-                JSONObject jsonObject = new JSONObject(resBody);
-                Iterator iter = jsonObject.keys();
-                while(iter.hasNext()) {
-                    String key = (String)iter.next();
-                    result.put(key, jsonObject.getString(key));
+            if(resBody != null || resBody.length() != 0 || resBody.charAt(0) == '{') {
+                try {
+                    JSONObject jsonObject = new JSONObject(resBody);
+                    Iterator iter = jsonObject.keys();
+                    while (iter.hasNext()) {
+                        String key = (String) iter.next();
+                        result.put(key, jsonObject.getString(key));
+                    }
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
                 }
-            } catch (JSONException e1) {
-                e1.printStackTrace();
+                return result;
             }
-            return result;
+            return null;
         }
 
         @Override
@@ -118,7 +121,7 @@ public class Utils {
         URL url;
 
         public interface TaskListener{
-            public void onFinished(ArrayList<HashMap<String, String>> result, Context context);
+            public void onFinished(ArrayList<HashMap<String, String>> result, final Context context);
         }
 
         private final TaskListener taskListener;

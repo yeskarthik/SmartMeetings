@@ -56,7 +56,7 @@ public class Login extends AppCompatActivity {
                 ,"auth",
                 new Utils.GetRequester.TaskListener() {
             @Override
-            public void onFinished(ArrayList<HashMap<String, String>> result, Context context) {
+            public void onFinished(ArrayList<HashMap<String, String>> result, final Context context) {
                 HashMap<String, String> res = result.get(0);
                 System.out.println("status");
                 System.out.println(res.get("status"));

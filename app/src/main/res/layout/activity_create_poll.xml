@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="mc.asu.edu.smartmeetings.CreatePoll">
+
+    <Button
+        android:id="@+id/submit_poll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ask"
+        android:onClick="createPoll"
+        tools:layout_editor_absoluteX="146dp"
+        tools:layout_editor_absoluteY="386dp"
+        android:layout_below="@+id/option_4_create"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp" />
+
+    <EditText
+        android:id="@+id/option_1_create"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Option 1"
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteX="85dp"
+        tools:layout_editor_absoluteY="98dp"
+        android:layout_marginTop="21dp"
+        android:layout_below="@+id/question_poll_create"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:id="@+id/option_2_create"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Option 2"
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteX="85dp"
+        tools:layout_editor_absoluteY="168dp"
+        android:layout_below="@+id/option_1_create"
+        android:layout_alignStart="@+id/option_1_create"
+        android:layout_marginTop="24dp" />
+
+    <EditText
+        android:id="@+id/option_3_create"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Option 3"
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteX="85dp"
+        tools:layout_editor_absoluteY="234dp"
+        android:layout_below="@+id/option_2_create"
+        android:layout_alignStart="@+id/option_2_create"
+        android:layout_marginTop="29dp" />
+
+    <EditText
+        android:id="@+id/option_4_create"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Option 4"
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteX="85dp"
+        tools:layout_editor_absoluteY="304dp"
+        android:layout_below="@+id/option_3_create"
+        android:layout_alignStart="@+id/option_3_create"
+        android:layout_marginTop="25dp" />
+
+    <EditText
+        android:id="@+id/question_poll_create"
+        android:layout_width="307dp"
+        android:layout_height="58dp"
+        android:ems="10"
+        android:hint="Question?"
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteX="34dp"
+        tools:layout_editor_absoluteY="16dp"
+        android:layout_marginTop="30dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>

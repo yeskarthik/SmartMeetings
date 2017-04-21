@@ -10,4 +10,8 @@
         android:title="Polls" />
     <item android:id="@+id/quick_questions"
         android:title="Quick Questions" />
+    <item android:id="@+id/list_meet_locations"
+        android:title="Find meeting locations" />
+    <item android:id="@+id/view_meetings"
+        android:title="View Meetings" />
 </menu>

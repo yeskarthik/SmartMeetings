@@ -21,7 +21,7 @@ public class DisplayUsers extends Activity {
 
     ListView listView;
 
-   String[] userList;
+    String[] userList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

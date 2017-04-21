@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         Utils.GetRequester request = new Utils.GetRequester(this.getApplicationContext(), "users",
             new Utils.GetRequester.TaskListener() {
                 @Override
-                public void onFinished(ArrayList<HashMap<String, String>> result, Context context) {
+                public void onFinished(ArrayList<HashMap<String, String>> result, final Context context) {
                     List<String> d = new ArrayList<String>();
                     for(HashMap<String, String> res: result) {
                         d.add(res.get("username"));

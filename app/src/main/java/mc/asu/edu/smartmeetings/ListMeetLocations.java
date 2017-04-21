@@ -70,7 +70,7 @@ public class ListMeetLocations extends AppCompatActivity {
                     Utils.PostRequester postRequester = new Utils.PostRequester
                     (getApplicationContext(), "meeting", new Utils.PostRequester.TaskListener() {
                         @Override
-                        public void onFinished(HashMap<String, String> result, Context context) {
+                        public void onFinished(HashMap<String, String> result, final Context context) {
                             System.out.println(result.keySet().toString());
                         }
                     });

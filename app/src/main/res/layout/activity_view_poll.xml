@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="mc.asu.edu.smartmeetings.ViewPoll">
+
+    <TextView
+        android:id="@+id/qView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Question"
+        android:textSize="26sp"
+        android:layout_marginBottom="67dp"
+        android:layout_above="@+id/opt1view"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/q"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/opt1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Option 1"
+        android:layout_alignBaseline="@+id/opt1view"
+        android:layout_alignBottom="@+id/opt1view"
+        android:layout_alignStart="@+id/opt2" />
+
+    <TextView
+        android:id="@+id/opt1view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_marginBottom="37dp"
+        android:layout_above="@+id/opt2view"
+        android:layout_toEndOf="@+id/qView" />
+
+    <TextView
+        android:id="@+id/opt2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Option2"
+        android:layout_marginBottom="35dp"
+        android:layout_marginEnd="40dp"
+        android:layout_above="@+id/opt3"
+        android:layout_toStartOf="@+id/qView" />
+
+    <TextView
+        android:id="@+id/opt2view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_alignBaseline="@+id/opt2"
+        android:layout_alignBottom="@+id/opt2"
+        android:layout_alignStart="@+id/opt1view" />
+
+    <TextView
+        android:id="@+id/opt3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Option3"
+        android:layout_marginBottom="214dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/opt2" />
+
+    <TextView
+        android:id="@+id/opt3view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_alignBaseline="@+id/opt3"
+        android:layout_alignBottom="@+id/opt3"
+        android:layout_alignStart="@+id/opt2view" />
+
+    <TextView
+        android:id="@+id/opt4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Option4"
+        android:layout_alignBaseline="@+id/opt4view"
+        android:layout_alignBottom="@+id/opt4view"
+        android:layout_alignStart="@+id/opt3" />
+
+    <TextView
+        android:id="@+id/opt4view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/opt3view"
+        android:layout_alignStart="@+id/opt3view" />
+</RelativeLayout>

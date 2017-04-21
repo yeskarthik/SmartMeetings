@@ -28,18 +28,31 @@ import com.pusher.android.notifications.fcm.FCMPushNotificationReceivedListener;
 import com.pusher.android.notifications.interests.InterestSubscriptionChangeListener;
 import com.pusher.android.notifications.tokens.PushNotificationRegistrationListener;
 
+import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 public class Home extends AppCompatActivity {
 
     public static final int ASK_MULTIPLE_PERMISSION_REQUEST_CODE =1;
     gpsService service;
     pollService poll_service;
     SharedPreferences preferences;
+    String username;
     int mId = 5;
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         // REQUEST ALL PERMISSIONS HERE
+
+        preferences = getSharedPreferences("SmartMeetings", Context.MODE_PRIVATE);
+        String name = preferences.getString("name", "");
+        context = this.getApplicationContext();
+        this.username = name;
+        System.out.println("username " + name);
 
         int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR);
         int permissionCheck1 = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR);
@@ -53,15 +66,17 @@ public class Home extends AppCompatActivity {
         else
         {
             System.out.println("Permissions were granted, starting service");
-            startPolling();
+            try {
+                startPolling();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             //service = new gpsService(this);
            // service.startService();
 
         }
 
-        preferences = getSharedPreferences("SmartMeetings", Context.MODE_PRIVATE);
-        String name = preferences.getString("name", "");
-        System.out.println("username " + name);
+
         TextView view = (TextView) findViewById(R.id.username);
         view.append("Welcome, "+name);
 
@@ -100,7 +115,11 @@ public class Home extends AppCompatActivity {
 
                     //service = new gpsService(this);
                     //service.startService();
-                    startPolling();
+                    try {
+                        startPolling();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
                 } else {
 
@@ -118,10 +137,17 @@ public class Home extends AppCompatActivity {
         }
     }
 
-    public void startPolling()
+    public void startPolling () throws Exception
     {
         String token = FirebaseInstanceId.getInstance().getToken();
         System.out.println("Registered with token "+token);
+        System.out.println("username : " + username);
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("token_id", token);
+        params.put("username", this.username);
+        Utils.PostRequester postRequester = new Utils.PostRequester(this.getApplicationContext(), "token", null);
+        postRequester.execute(params);
+
         try
         {
             PusherAndroid pusher = new PusherAndroid("bdf3e36a58647e366f38");
@@ -154,8 +180,19 @@ public class Home extends AppCompatActivity {
             nativePusher.setFCMListener(new FCMPushNotificationReceivedListener() {
                 @Override
                 public void onMessageReceived(RemoteMessage remoteMessage) {
-                    // do something magical 🔮
+                    // do something magical
                     System.out.println("Received from server "+ remoteMessage.getNotification().getBody() + " "+remoteMessage.getNotification().getTitle());
+                    Map<String, String> data = remoteMessage.getData();
+                    Intent submitPoll = new Intent(context, SubmitPoll.class);
+                    Bundle extras = new Bundle();
+                    extras.putString("question", data.get("question"));
+                    extras.putString("option1", data.get("option1"));
+                    extras.putString("option2", data.get("option2"));
+                    extras.putString("option3", data.get("option3"));
+                    extras.putString("option4", data.get("option4"));
+                    extras.putString("id", data.get("poll_id"));
+                    submitPoll.putExtras(extras);
+                    startActivity(submitPoll);
                 }
             });
         }
@@ -164,6 +201,7 @@ public class Home extends AppCompatActivity {
             System.out.println(e);
         }
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -186,9 +224,20 @@ public class Home extends AppCompatActivity {
                 startActivity(in);
                 return true;
             case R.id.polls:
+                Intent ink = new Intent(this, ListPolls.class);
+                startActivity(ink);
                 return true;
             case R.id.quick_questions:
                 return true;
+            case R.id.list_meet_locations:
+                Intent inc = new Intent(this, ListMeetLocationsInput.class);
+                startActivity(inc);
+                return true;
+            case R.id.view_meetings:
+                Intent inte = new Intent(this, ViewMeetings.class);
+                startActivity(inte);
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }

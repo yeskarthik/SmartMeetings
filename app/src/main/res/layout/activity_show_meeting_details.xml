@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="mc.asu.edu.smartmeetings.ShowMeetingDetails">
+
+
+    <TextView
+        android:id="@+id/meeting_name_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="104dp"
+        android:textSize="26sp"
+        android:text="TextView"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/creator_name_detail" />
+
+    <TextView
+        android:id="@+id/creator_name_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
+        android:text="TextView"
+        android:textSize="26sp"
+        android:layout_below="@+id/meeting_name_detail"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/create_poll_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="110dp"
+        android:text="Create Poll"
+        android:onClick="createPoll"
+        android:layout_below="@+id/creator_name_detail"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>

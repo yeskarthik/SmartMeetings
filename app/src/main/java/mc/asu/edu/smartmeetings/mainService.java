@@ -61,7 +61,7 @@ public class mainService extends IntentService {
                 ,"polls",
                 new Utils.GetRequester.TaskListener() {
                     @Override
-                    public void onFinished(ArrayList<HashMap<String, String>> result, Context context) {
+                    public void onFinished(ArrayList<HashMap<String, String>> result, final Context context) {
                         System.out.println("Polling");
                         HashMap<String, String> res = result.get(0);
                         System.out.println("status");

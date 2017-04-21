@@ -170,7 +170,7 @@ public class ListMeetLocationsInput extends AppCompatActivity {
         Utils.GetRequester getRequester = new Utils.GetRequester(
             this.getApplication(), "meetingrooms", new Utils.GetRequester.TaskListener() {
             @Override
-            public void onFinished(ArrayList<HashMap<String, String>> result, Context context) {
+            public void onFinished(ArrayList<HashMap<String, String>> result, final Context context) {
                 ArrayList<String> locationNames = new ArrayList<String>();
                 ArrayList<String> locationIds = new ArrayList<String>();
 
