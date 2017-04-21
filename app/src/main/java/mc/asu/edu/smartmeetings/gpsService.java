@@ -8,10 +8,19 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.*;
+import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 
 import org.w3c.dom.Text;
 
@@ -22,10 +31,13 @@ import java.util.Map;
  * Created by Sairaj on 4/6/2017.
  */
 
-public class gpsService {
+public class gpsService implements
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     LocationManager locationManager;
     private Context context;
     private PendingIntent pendingIntent;
+        LocationRequest mLocationRequest;
+        GoogleApiClient mGoogleApiClient;
     Location location;
     TextView weather;
     public gpsService(Context context)
@@ -36,9 +48,10 @@ public class gpsService {
         //weather = (TextView) viewById;
     }
 
-    public Location startService()
+    public  void startService()
     {
-        System.out.println("Started Service");
+
+        /*System.out.println("Started Service");
         locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
 
         boolean gps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -75,9 +88,53 @@ public class gpsService {
             }
 
 
+        }*/
+
+        buildGoogleApiClient();
+        mGoogleApiClient.connect();
+        //return location;
+    }
+    protected synchronized void buildGoogleApiClient() {
+        //Toast.makeText(,"buildGoogleApiClient",Toast.LENGTH_SHORT).show();
+        mGoogleApiClient = new GoogleApiClient.Builder(context)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+    }
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(10);
+        mLocationRequest.setFastestInterval(10);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        Intent mRequestLocationUpdatesIntent = new Intent(context, gpsLocation.class);
+        pendingIntent = PendingIntent.getService(context, 0,
+                mRequestLocationUpdatesIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        try
+        {
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
+                    mLocationRequest,
+                    pendingIntent);
+
+        }
+        catch(SecurityException e)
+        {
+            System.out.println(e);
         }
 
-        return location;
+
     }
 
+    @Override
+    public void onConnectionSuspended(int i) {
+        System.out.println("onConnectionSuspended");
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        System.out.println("onConnectionFailed");
+    }
 }

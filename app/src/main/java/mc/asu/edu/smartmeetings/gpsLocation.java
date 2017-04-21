@@ -3,7 +3,9 @@ package mc.asu.edu.smartmeetings;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,7 +18,7 @@ import java.util.Map;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-
+import com.google.android.gms.location.LocationResult;
 
 /**
  * Created by Sairaj on 4/5/2017.
@@ -34,17 +36,28 @@ public gpsLocation()
     protected void onHandleIntent(Intent workIntent) {
         // Gets data from the incoming Intent
         //sendLocation to our AWS server over network using sendLocation function.
+        System.out.println("Received intent");
+        if(LocationResult.hasResult(workIntent))
+        {
+            System.out.println("Received intent, processing");
+            try
+            {
+                LocationResult result = LocationResult.extractResult(workIntent);
+                Location location = result.getLastLocation();
+                sendLocation(getApplicationContext(), location);
+                getWeatherUpdates(getApplicationContext());
 
-        try
-        {
-            getWeatherUpdates(getApplicationContext());
-            gpsService mService = new gpsService(getApplicationContext());
-            sendLocation(getApplicationContext(), mService.startService());
+               // gpsService mService = new gpsService(getApplicationContext());
+
+
+
+            }
+            catch(Exception e)
+            {
+                System.out.println(e);
+            }
         }
-        catch(Exception e)
-        {
-            System.out.println(e);
-        }
+
 
     }
 
@@ -80,7 +93,9 @@ public gpsLocation()
         timestamp = location.getTime(); // this is going to give us time in milliseconds.
         System.out.println(timestamp + " latitude " + latitude + " longitude " + longitude );
         Map<String, String> params = new HashMap<String, String>();
-        params.put("username", "something");
+        SharedPreferences sharedPreferences = getSharedPreferences("SmartMeetings", Context.MODE_PRIVATE);
+        String name = sharedPreferences.getString("name","");
+        params.put("username", name);
         params.put("latitude", Double.toString(location.getLatitude()));
         params.put("longitude", Double.toString(location.getLongitude()));
         Utils.PostRequester postRequest = new Utils.PostRequester(this.getApplicationContext(), "location", null);
