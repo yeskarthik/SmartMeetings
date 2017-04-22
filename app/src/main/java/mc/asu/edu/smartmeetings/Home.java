@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -12,8 +13,10 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.AudioManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -53,6 +56,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -149,6 +153,25 @@ public class Home extends AppCompatActivity implements
             picButton.setEnabled(false);
         //(END)
 
+
+        batteryChecker mBatteryLevelReceiver = new batteryChecker();
+        registerReceiver(mBatteryLevelReceiver, new IntentFilter(
+                Intent.ACTION_BATTERY_CHANGED));
+
+        Log.i("mystuff", "I started...");
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.MODIFY_AUDIO_SETTINGS,Manifest.permission.ACCESS_NOTIFICATION_POLICY}, ASK_MULTIPLE_PERMISSION_REQUEST_CODE);
+        NotificationManager notificationManager =
+                (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
+                && !notificationManager.isNotificationPolicyAccessGranted()) {
+
+            Intent intent = new Intent(
+                    android.provider.Settings
+                            .ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
+
+            startActivity(intent);
+        }
     }
     @Override
     public void onRequestPermissionsResult(int requestCode,
@@ -225,7 +248,13 @@ public class Home extends AppCompatActivity implements
             {
                 locationM locate = new locationM();
                 locate.execute(loc);
-                System.out.println("Weather and temperature" +" "+ loc.getLatitude() +" " + weather);
+
+                System.out.println("Weather and temperature" +" "+ loc.getLatitude());
+
+                if (loc.getLatitude() == 33.43 && loc.getLongitude() == -111.9) {
+                    AudioManager audiomanage = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+                    audiomanage.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+                }
                 //view.setText("Weather : "+weather);
             }
 
@@ -434,7 +463,7 @@ public class Home extends AppCompatActivity implements
 
         System.out.println("connected to google api");
         mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(1000*60*30);
+        mLocationRequest.setInterval(1000*60);
         mLocationRequest.setFastestInterval(10);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         Intent mRequestLocationUpdatesIntent = new Intent(this, gpsLocation.class);
@@ -470,6 +499,7 @@ public class Home extends AppCompatActivity implements
     public void onLocationChanged(Location location) {
         System.out.println("Location changed ");
         loc = location;
+
         setTemperature();
 
     }
@@ -534,9 +564,13 @@ public class Home extends AppCompatActivity implements
             super.onPostExecute(s);
             weather = s;
             System.out.println("Weather2 "+weather);
+            String[] weatherArr = weather.split(" ");
+            Double kelvin = Double.parseDouble(weatherArr[weatherArr.length - 1]);
+            Double fahrenheit = (kelvin * 9 / 5.0) - 459.67;
+            String weatherString = Arrays.toString(Arrays.copyOf(weatherArr, weatherArr.length-1));
 
             TextView view = (TextView) findViewById(R.id.weather_box);
-            view.setText("Weather: "+weather+"K");
+            view.setText("Weather: " + weatherString.substring(1, weatherString.length()-1) + " " + String.format( "%.2f", fahrenheit )+"F");
 
         }
     }

@@ -24,6 +24,9 @@ public class ViewMeetings extends AppCompatActivity {
     String username;
     List<String> meeting_ids;
     List<String> meeting_names;
+    List<String> froms;
+    List<String> tos;
+    List<String> locationNames;
     Context context;
     List<String> creators;
 
@@ -46,10 +49,16 @@ public class ViewMeetings extends AppCompatActivity {
                     meeting_names = new ArrayList<>();
                     meeting_ids = new ArrayList<>();
                     creators = new ArrayList<>();
+                    froms = new ArrayList<>();
+                    tos = new ArrayList<>();
+                    locationNames = new ArrayList<>();
                     for(HashMap<String, String> res: result) {
                         meeting_ids.add(res.get("id"));
                         meeting_names.add(res.get("name"));
                         creators.add(res.get("creator"));
+                        froms.add(res.get("from"));
+                        tos.add(res.get("to"));
+                        locationNames.add(res.get("location_name"));
                     }
                     createList();
                 }
@@ -84,6 +93,9 @@ public class ViewMeetings extends AppCompatActivity {
             extras.putString("meeting_name", ((TextView) view).getText().toString());
             extras.putString("creator", creators.get(meeting_names.indexOf(((TextView) view).getText())));
             extras.putString("meeting_id", meeting_ids.get(meeting_names.indexOf(((TextView) view).getText())));
+            extras.putString("location_name", locationNames.get(meeting_names.indexOf(((TextView) view).getText())));
+            extras.putString("from", froms.get(meeting_names.indexOf(((TextView) view).getText())));
+            extras.putString("to", tos.get(meeting_names.indexOf(((TextView) view).getText())));
             inc.putExtras(extras);
             startActivity(inc);
             }

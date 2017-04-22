@@ -11,21 +11,51 @@
         android:id="@+id/meeting_name_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="104dp"
         android:textSize="26sp"
         android:text="TextView"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/creator_name_detail" />
+        android:layout_marginStart="25dp"
+        android:layout_alignBaseline="@+id/textView11"
+        android:layout_alignBottom="@+id/textView11"
+        android:layout_toEndOf="@+id/create_poll_button" />
 
     <TextView
-        android:id="@+id/creator_name_detail"
+        android:id="@+id/location_det"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
         android:text="TextView"
         android:textSize="26sp"
-        android:layout_below="@+id/meeting_name_detail"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/to_time_det" />
+
+    <TextView
+        android:id="@+id/to_time_det"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="26sp"
+        android:layout_alignBaseline="@+id/textView13"
+        android:layout_alignBottom="@+id/textView13"
+        android:layout_alignStart="@+id/from_time_det" />
+
+    <TextView
+        android:id="@+id/from_time_det"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="26sp"
+        android:layout_above="@+id/textView13"
+        android:layout_alignStart="@+id/creator_name"
+        android:layout_marginBottom="15dp" />
+
+    <TextView
+        android:id="@+id/creator_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView10"
+        android:layout_alignBottom="@+id/textView10"
+        android:layout_alignStart="@+id/meeting_name_detail"
+        android:text="TextView"
+        android:textSize="26sp" />
 
     <Button
         android:id="@+id/create_poll_button"
@@ -46,4 +76,57 @@
         android:layout_alignBottom="@+id/create_poll_button"
         android:layout_toEndOf="@+id/create_poll_button"
         android:layout_marginStart="41dp" />
+
+    <Button
+        android:id="@+id/navigate_meeting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/create_qq_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:text="Navigate" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Creator"
+        android:layout_above="@+id/from_time_det"
+        android:layout_alignStart="@+id/textView14"
+        android:layout_marginBottom="20dp" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:layout_alignParentTop="true"
+        android:layout_alignEnd="@+id/textView10"
+        android:layout_marginTop="63dp" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="From"
+        android:layout_alignBaseline="@+id/from_time_det"
+        android:layout_alignBottom="@+id/from_time_det"
+        android:layout_alignEnd="@+id/textView13" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="To"
+        android:layout_above="@+id/textView14"
+        android:layout_alignEnd="@+id/textView10"
+        android:layout_marginBottom="20dp" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location"
+        android:layout_alignTop="@+id/location_det"
+        android:layout_toStartOf="@+id/navigate_meeting" />
 </RelativeLayout>

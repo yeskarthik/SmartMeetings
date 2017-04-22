@@ -66,10 +66,17 @@ public class RegisterUser extends AppCompatActivity {
         params.put("name", name.getText().toString());
         params.put("username", username.getText().toString());
         params.put("email", email.getText().toString());
+        params.put("password", password.getText().toString());
         params.put("phone", phone.getText().toString());
         params.put("mode_of_transport", modeOfTransport);
 
-        Utils.PostRequester request = new Utils.PostRequester(this.getApplicationContext(), "user", null);
+        Utils.PostRequester request = new Utils.PostRequester(this, "user", new Utils.PostRequester.TaskListener() {
+            @Override
+            public void onFinished(HashMap<String, String> result, Context context) {
+                Intent in = new Intent(context, Login.class);
+                startActivity(in);
+            }
+        });
         request.execute(params);
 
     }
