@@ -22,11 +22,13 @@ public class ListMeetLocations extends AppCompatActivity {
 
     private SharedPreferences preferences;
     private String username;
+    private String participantsString;
+    Context appContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        this.appContext = this;
         preferences = getSharedPreferences("SmartMeetings",Context.MODE_PRIVATE);
         username = preferences.getString("name","");
 
@@ -39,6 +41,7 @@ public class ListMeetLocations extends AppCompatActivity {
         final String from_date = extras.getString("from_date");
         final String to_date = extras.getString("to_date");
         final String meeting_name = extras.getString("meeting_name");
+        participantsString = extras.getString("participants");
 
         System.out.println(Arrays.toString(locationNames.toArray(new String[locationNames.size()])));
         System.out.println(Arrays.toString(locationIds.toArray(new String[locationIds.size()])));
@@ -64,14 +67,19 @@ public class ListMeetLocations extends AppCompatActivity {
                 params.put("to_date", to_date);
                 params.put("name", meeting_name);
                 params.put("creator", username);
+                params.put("participants", participantsString);
                 params.put("location_id", locationIds.get(locationNames.indexOf(((TextView) view).getText())));
 
                 try {
                     Utils.PostRequester postRequester = new Utils.PostRequester
-                    (getApplicationContext(), "meeting", new Utils.PostRequester.TaskListener() {
+                    (appContext, "meeting", new Utils.PostRequester.TaskListener() {
                         @Override
                         public void onFinished(HashMap<String, String> result, final Context context) {
                             System.out.println(result.keySet().toString());
+                            Toast toast = Toast.makeText(context, "Meeting has been created", Toast.LENGTH_LONG);
+                            toast.show();
+                            Intent in = new Intent(appContext, Home.class);
+                            startActivity(in);
                         }
                     });
                     postRequester.execute(params);

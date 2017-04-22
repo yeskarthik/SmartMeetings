@@ -9,11 +9,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kunzisoft.switchdatetime.SwitchDateTimeDialogFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -32,6 +34,8 @@ public class ListMeetLocationsInput extends AppCompatActivity {
     Date fromDateFormatted;
     Date toDateFormatted;
     List<String> userList;
+    String participantsString;
+
 
     TextView textView;
 
@@ -54,6 +58,8 @@ public class ListMeetLocationsInput extends AppCompatActivity {
         fromDate = (EditText) findViewById(R.id.from_meeting_date);
         toDate = (EditText) findViewById(R.id.to_meeting_date);
 
+        String[] partArray = userList.toArray(new String[userList.size()]);
+        participantsString = Arrays.toString(partArray).substring(1, Arrays.toString(partArray).length() - 1);
 
         // Construct SwitchDateTimePicker
         fromDateTimeFragment = (SwitchDateTimeDialogFragment) getSupportFragmentManager().findFragmentByTag(TAG_DATETIME_FRAGMENT);
@@ -182,29 +188,47 @@ public class ListMeetLocationsInput extends AppCompatActivity {
         Map<String, String> params = new HashMap<String, String>();
         params.put("from_date", df.format(fromDa8));
         params.put("to_date", df.format(toDa8));
-
+        params.put("participants", participantsString);
         Utils.GetRequester getRequester = new Utils.GetRequester(
-            this.getApplication(), "meetingrooms", new Utils.GetRequester.TaskListener() {
+            this.getApplication(), "checkclash", new Utils.GetRequester.TaskListener() {
             @Override
             public void onFinished(ArrayList<HashMap<String, String>> result, final Context context) {
-                ArrayList<String> locationNames = new ArrayList<String>();
-                ArrayList<String> locationIds = new ArrayList<String>();
+                HashMap<String, String> res = result.get(0);
+                if(res.get("status").equals("false")) {
+                    Bundle extras = new Bundle();
+                    extras.putString("result", res.get("result"));
+                    Toast toast = Toast.makeText(context, "The meeting time you created is clashing for some of the participants", Toast.LENGTH_LONG);
+                    toast.show();
+                    Intent in = new Intent(context, DisplayUsers.class);
+                    in.putExtras(extras);
+                    startActivity(in);
+                } else {
+                    System.out.println(res.get("location_list"));
+                    String[] locAndIds = res.get("location_list").substring(2, res.get("location_list").length() - 2).replace("\"", "").split(",");
+                    System.out.println(Arrays.toString(locAndIds));
+                    ArrayList<String> locationNames = new ArrayList<String>();
+                    ArrayList<String> locationIds = new ArrayList<String>();
+                    System.out.println(locAndIds.length);
+                    for(int i = 0; i<locAndIds.length; i+=2) {
+                        locationNames.add(locAndIds[i+1]);
+                        locationIds.add(locAndIds[i]);
+                    }
+                    Intent intent = new Intent(context, ListMeetLocations.class);
+                    Bundle extras = new Bundle();
+                    extras.putStringArrayList("locationNames", locationNames);
+                    extras.putStringArrayList("locationIds", locationIds);
+                    extras.putString("from_date", df.format(fromDa8));
+                    extras.putString("to_date", df.format(toDa8));
+                    extras.putString("meeting_name", meeting_name);
+                    extras.putString("participants", participantsString);
+                    intent.putExtras(extras);
+                    //intent.putExtra(EXTRA_MESSAGE, locationNames.toArray(new String[locationNames.size()]));
 
-                for(HashMap<String, String> res: result) {
-                    locationNames.add(res.get("name"));
-                    locationIds.add(res.get("id"));
+                    startActivity(intent);
+
                 }
-                Intent intent = new Intent(context, ListMeetLocations.class);
-                Bundle extras = new Bundle();
-                extras.putStringArrayList("locationNames", locationNames);
-                extras.putStringArrayList("locationIds", locationIds);
-                extras.putString("from_date", df.format(fromDa8));
-                extras.putString("to_date", df.format(toDa8));
-                extras.putString("meeting_name", meeting_name);
-                intent.putExtras(extras);
-                //intent.putExtra(EXTRA_MESSAGE, locationNames.toArray(new String[locationNames.size()]));
 
-                startActivity(intent);
+                /**/
             }
         });
 

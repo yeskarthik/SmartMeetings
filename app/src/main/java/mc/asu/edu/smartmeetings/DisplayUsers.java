@@ -87,7 +87,7 @@ public class DisplayUsers extends Activity {
         System.out.println(Arrays.toString(selectedUsers.toArray()));
 
         Bundle extras = new Bundle();
-        extras.putStringArrayList("userList", (ArrayList)userList);
+        extras.putStringArrayList("userList", (ArrayList)selectedUsers);
 
         Intent in = new Intent(this, ListMeetLocationsInput.class);
         in.putExtras(extras);

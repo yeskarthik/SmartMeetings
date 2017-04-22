@@ -394,9 +394,6 @@ public class Home extends AppCompatActivity implements
                 Intent inc = new Intent(this, DisplayUsers.class);
                 startActivity(inc);
                 return true;
-            case R.id.camera:
-                //showHelp();
-                return true;
             case R.id.note_taking:
                 Intent in = new Intent(this, NoteTakingActivity.class);
                 startActivity(in);
