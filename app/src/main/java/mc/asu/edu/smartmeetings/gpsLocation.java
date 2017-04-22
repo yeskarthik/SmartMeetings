@@ -1,6 +1,8 @@
 package mc.asu.edu.smartmeetings;
 
+import android.annotation.TargetApi;
 import android.app.IntentService;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -83,13 +85,21 @@ public gpsLocation()
 
 
     }
-
+    @TargetApi(23)
     void sendLocation(Context context, Location location) throws MalformedURLException
     {
 
         long timestamp;
         latitude = location.getLatitude();
         longitude = location.getLongitude();
+        if (location.getLatitude() > 33.42 && location.getLatitude() < 33.44 && location.getLongitude() <= -111.8 && location.getLatitude() > -111.10)
+        {
+            System.out.println("I need the IF condition");
+            NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            mNotificationManager.setInterruptionFilter(mNotificationManager.INTERRUPTION_FILTER_NONE);
+            //AudioManager audiomanage = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+            //audiomanage.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+        }
         timestamp = location.getTime(); // this is going to give us time in milliseconds.
         System.out.println(timestamp + " latitude " + latitude + " longitude " + longitude );
         Map<String, String> params = new HashMap<String, String>();

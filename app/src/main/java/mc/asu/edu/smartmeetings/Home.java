@@ -254,14 +254,7 @@ public class Home extends AppCompatActivity implements
 
                 System.out.println("Weather and temperature" +" "+ loc.getLatitude());
 
-                if (loc.getLatitude() > 33.42 && loc.getLatitude() < 33.44 && loc.getLongitude() <= -111.8 && loc.getLatitude() > -111.10)
-                {
-                    System.out.println("I need the IF condition");
-                    NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                    mNotificationManager.setInterruptionFilter(mNotificationManager.INTERRUPTION_FILTER_NONE);
-                    AudioManager audiomanage = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
-                    audiomanage.setRingerMode(AudioManager.RINGER_MODE_SILENT);
-                }
+
                 //view.setText("Weather : "+weather);
             }
 
