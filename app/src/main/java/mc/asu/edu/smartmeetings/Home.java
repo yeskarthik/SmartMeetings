@@ -1,6 +1,8 @@
 package mc.asu.edu.smartmeetings;
 
 import android.Manifest;
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -101,7 +103,7 @@ public class Home extends AppCompatActivity implements
         if(permissionCheck != PackageManager.PERMISSION_GRANTED)
         {
             System.out.println("WRITE Calendar permission denied");
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_CALENDAR, Manifest.permission.READ_CALENDAR, Manifest.permission.ACCESS_FINE_LOCATION}, ASK_MULTIPLE_PERMISSION_REQUEST_CODE);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_CALENDAR, Manifest.permission.READ_CALENDAR, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_NOTIFICATION_POLICY}, ASK_MULTIPLE_PERMISSION_REQUEST_CODE);
         }
         else
         {
@@ -220,6 +222,7 @@ public class Home extends AppCompatActivity implements
                 .addApi(LocationServices.API)
                 .build();
     }
+    @TargetApi(23)
     public void setTemperature()
     {
         System.out.println("I got called");
@@ -251,9 +254,12 @@ public class Home extends AppCompatActivity implements
 
                 System.out.println("Weather and temperature" +" "+ loc.getLatitude());
 
-                if (loc.getLatitude() == 33.43 && loc.getLongitude() == -111.9) {
-                    AudioManager audiomanage = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-                    audiomanage.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+                if (loc.getLatitude() > 33.42 && loc.getLatitude() < 33.44 && loc.getLongitude() <= -111.8 && loc.getLatitude() > -111.10)
+                {
+                    System.out.println("I need the IF condition");
+                    NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+                    mNotificationManager.setInterruptionFilter(mNotificationManager.INTERRUPTION_FILTER_NONE);
                 }
                 //view.setText("Weather : "+weather);
             }
