@@ -32,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        android:textSize="26sp"
+        android:textSize="20sp"
         android:layout_alignBaseline="@+id/textView13"
         android:layout_alignBottom="@+id/textView13"
         android:layout_alignStart="@+id/from_time_det" />
@@ -42,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        android:textSize="26sp"
+        android:textSize="20sp"
         android:layout_above="@+id/textView13"
         android:layout_alignStart="@+id/creator_name"
         android:layout_marginBottom="15dp" />
