@@ -258,8 +258,9 @@ public class Home extends AppCompatActivity implements
                 {
                     System.out.println("I need the IF condition");
                     NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
                     mNotificationManager.setInterruptionFilter(mNotificationManager.INTERRUPTION_FILTER_NONE);
+                    AudioManager audiomanage = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+                    audiomanage.setRingerMode(AudioManager.RINGER_MODE_SILENT);
                 }
                 //view.setText("Weather : "+weather);
             }

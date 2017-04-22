@@ -28,9 +28,13 @@ public class ShowMeetingDetails extends AppCompatActivity {
         this.meeting_id = extras.getString("meeting_id");
         this.meeting_name = extras.getString("meeting_name");
         this.creator = extras.getString("creator");
-        this.from = extras.getString("from");
-        this.to = extras.getString("to");
-        this.locationName = extras.getString("locationName");
+        this.from = extras.getString("from_date");
+        this.to = extras.getString("to_date");
+        this.locationName = extras.getString("location_name");
+
+        System.out.println("hellasdjas sdas");
+        System.out.println(from);
+        System.out.println(to);
 
 
         TextView meeting_name_view = (TextView)findViewById(R.id.meeting_name_detail);
