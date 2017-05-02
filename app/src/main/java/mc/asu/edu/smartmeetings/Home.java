@@ -268,6 +268,7 @@ public class Home extends AppCompatActivity implements
 
     public void startPolling () throws Exception
     {
+        //Reference - https://blog.pusher.com/send-push-notifications-over-firebase-cloud-messaging-fcm-with-pushers-mobile-push-notifications-api/.
         String token = FirebaseInstanceId.getInstance().getToken();
         System.out.println("Registered with token "+token);
         System.out.println("username : " + username);
@@ -347,7 +348,7 @@ public class Home extends AppCompatActivity implements
             nativePusher2.subscribe("quickquestions", new InterestSubscriptionChangeListener() {
                 @Override
                 public void onSubscriptionChangeSucceeded() {
-                    System.out.println("Success! Ready to receive polls");
+                    System.out.println("Success! Ready to receive qq");
                 }
 
                 @Override

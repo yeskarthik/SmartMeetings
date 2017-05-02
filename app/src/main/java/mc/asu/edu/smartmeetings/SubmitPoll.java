@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -47,9 +48,17 @@ public class SubmitPoll extends AppCompatActivity {
         r4 = (RadioButton) findViewById(R.id.radioButton4);
         r4.setText("4. "+option4);
 
+        Button button = (Button) findViewById(R.id.submitPoll);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                submitPoll(view);
+            }
+        });
+
     }
 
-    protected void submitPoll(View view) {
+    void submitPoll(View view) {
 
         Map<String, String> params = new HashMap<>();
         params.put("poll_id", poll_id);

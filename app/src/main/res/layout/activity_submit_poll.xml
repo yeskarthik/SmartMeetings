@@ -67,7 +67,6 @@
         android:layout_below="@+id/radioGroup"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:onClick="submitPoll"
         android:text="Submit" />
 
 </RelativeLayout>

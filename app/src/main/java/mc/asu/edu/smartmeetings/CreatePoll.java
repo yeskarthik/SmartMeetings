@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import java.net.MalformedURLException;
@@ -32,6 +33,13 @@ public class CreatePoll extends AppCompatActivity {
         this.username = name;
         System.out.println("hi");
         setContentView(R.layout.activity_create_poll);
+        Button button = (Button) findViewById(R.id.submit_poll);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createPoll(view);
+            }
+        });
 
     }
 
